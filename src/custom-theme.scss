@@ -1,0 +1,84 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+@use "_theme-colors" as mytheme;
+
+
+// Define the Material typography configuration
+$heading-font-family: 'Roboto', sans-serif;
+$regular-font-family: 'Inter', sans-serif;
+$theme-typography: (
+  plain-family: $regular-font-family,
+  brand-family: $heading-font-family,
+  bold-weight: 700,
+  medium-weight: 500,
+  regular-weight: 400,
+);
+
+// Include Material core styles (only once)
+@include mat.core();
+
+// define the themes
+$light-theme: mat.define-theme((
+    color: (
+        theme-type: light,
+        primary: mytheme.$primary-palette,
+        tertiary: mytheme.$tertiary-palette,
+    ),
+    typography: $theme-typography,
+    density: (
+        scale: -1,
+    ),
+));
+$dark-theme: mat.define-theme((
+    color: (
+        theme-type: dark,
+        primary: mytheme.$primary-palette,
+        tertiary: mytheme.$tertiary-palette,
+    ),
+    typography: $theme-typography,
+    density: (
+        scale: -2,
+    ),
+));
+
+html {
+    color-scheme: light;
+    @include mat.all-component-themes($light-theme);
+}
+
+.dark-theme {
+    color-scheme: dark default;
+    @include mat.all-component-colors($dark-theme);
+}
+
+
+body {
+    transition: background-color 0.3s ease;
+}
+
+// html {
+    
+//   @include mat.theme((
+//     color: (
+//       theme-type: dark,
+//       primary: mytheme.$primary-palette,
+//       tertiary: mytheme.$tertiary-palette,
+//     ),
+//     typography: Roboto,
+//     density: -1,
+//   ));
+// }
+
+mat-slider {
+    @include mat.slider-overrides((
+        handle-height: 1rem,
+        handle-width: 1rem,
+        
+    ));
+    @include mat.form-field-overrides((
+        container-text-size: var(--mat-sys-body-small-size),
+    ))
+}
+

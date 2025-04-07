@@ -1,0 +1,23 @@
+.main-container {
+   height: 100%;
+}
+
+.main-content {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex: 1 1 auto;
+    flex-direction: column;
+}
+
+.app-sidenav {
+    border-radius: 0;
+    border-right: 1px solid rgba(101, 101, 101, 0.12);
+    @apply w-[90vw];
+    
+}
+@media (min-width: 768px) {
+    .app-sidenav {
+        @apply w-[300px];
+    }
+}

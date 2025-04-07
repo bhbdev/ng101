@@ -1,0 +1,64 @@
+@use "tailwindcss";
+
+.character {
+    @apply text-xs w-120 h-120 p-10 flex flex-col gap-2 items-center justify-center text-center;
+
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease-out;
+
+    &.back {
+        transform: rotate3d(0, 1, 0, 150deg);
+    }
+    
+}
+.character-stage {
+    @apply relative flex flex-col items-center justify-start w-full;
+
+    &:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        width: 320px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #545454;
+        opacity: 0.2;
+        filter: blur(3px);
+    }
+}
+
+.head,
+.left-arm,
+.right-arm,
+.body,
+.left-leg,
+.right-leg {
+    background-color: var(--skin-color);
+    color: #000;
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.041),  0 .7rem 1rem rgba(0, 0, 0, 0.639);
+    
+}
+.body {
+    border-radius: .25rem;
+}
+.arm {
+    border-bottom: 2rem solid #c7a47645;
+    border-top-right-radius: .5rem;
+    border-top-left-radius: .5rem;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+.leg {
+    padding:.2rem;
+    border-bottom: 3rem solid #0000ff;
+}
+.eyes {
+    @apply flex gap-4 mt-6 items-center justify-center;
+    div {
+        
+        box-shadow: 0 0 1px 2px #fff;
+        transition-duration: 500ms;
+    }
+    
+}

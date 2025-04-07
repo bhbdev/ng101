@@ -1,0 +1,24 @@
+<main class="fade-in  flex flex-col items-center justify-center h-full w-full p-7">
+    <h1 class="flex gap-2 items-center justify-center text-3xl">
+        <ng-icon name="featherSmile"></ng-icon>
+        Hello World
+    </h1>
+    
+    <p class="mt-5">
+        <button class="border rounded-2xl p-2 cursor-pointer absolute z-50" (click)="showConfetti($event)">
+            click me
+        </button>
+    </p>
+    <ngx-particles
+        [id]="confettiId"
+        [options]="confettiOptions"
+        class="z-10"
+    ></ngx-particles>
+
+    <ngx-particles
+        [id]="particlesId"
+        [options]="particlesOptions"
+        (particlesLoaded)="particlesLoaded($event)"
+    ></ngx-particles>
+
+</main>

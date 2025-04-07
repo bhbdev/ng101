@@ -1,0 +1,12 @@
+<div class="flex flex-col h-screen">
+    <app-header (sidenavToggle)="toggleSidenav()"></app-header>
+
+    <mat-sidenav-container class="main-container" autosize>
+        <mat-sidenav #sidenav class="app-sidenav" [mode]="isHandset()?'over':'side'" [opened]="!isHandset()">
+            <app-sidenav></app-sidenav>
+        </mat-sidenav>
+        <div class="xmain-content w-full h-full">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-container>
+</div>

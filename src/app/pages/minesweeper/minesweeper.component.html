@@ -1,0 +1,109 @@
+<main class="fade-in p-2 md:p-7">
+
+ <h1 class="text-3xl">Minesweeper</h1>
+ 
+ <div class="flex mt-5 z-10">
+    <div class="game z-20">
+        <div class="game-header">
+            <div class="text-xl font-bold uppercase bg-zinc-800  w-13 flex border-4 border-zinc-400 border-s-zinc-600 border-t-zinc-600  items-center justify-center font-mono text-green-500">
+                {{mines.length - flags < 10 ? '00' : mines.length - flags < 100 ? '0' : ''}}{{mines.length - flags}}
+            </div>
+
+            <button class="game-button" (click)="init()">
+            @if (gameOver) { @if (!win) { 😫 } @else { 🥳 } } @else { 😎 }
+            </button>
+            <div class="text-xl font-bold uppercase bg-zinc-800  w-13 flex border-4 border-zinc-400 border-s-zinc-600 border-t-zinc-600  items-center justify-center font-mono text-green-500">
+                000
+            </div>
+            
+        </div>
+        <ngx-particles 
+                [id]="confettiId" 
+                [options]="confettiOptions" 
+                class="z-30 pointer-events-none"
+            >
+        </ngx-particles>
+       
+        <div class="board relative">
+            @if (gameOver && win) {
+                <div class="absolute inset-0 flex items-center justify-center z-40">
+                    <h2 class="text-4xl font-extrabold text-green-500 animate-pulse">
+                        WINNER!
+                    </h2>
+                </div>
+            }
+            @for ( row of board; let x = $index; track x) {
+            <div class="row">
+                @for ( cell of row; let y =  $index; track y) {
+                <button 
+                    class="cell" 
+                    (click)="reveal($event,x,y)" 
+                    (contextmenu)="flag($event,x,y)"
+                    [class]="cell.mines ? 'nearby-'+cell.mines : ''"
+                    [class.revealed]="cell.revealed"
+                    [disabled]="cell.revealed"
+                >
+                    @if (cell.revealed) {
+                        @if (cell.isMine) { 
+                            <ng-icon-stack size="32px">
+                                <ng-icon name="matSettingsSharp" class="!text-black" />
+                                <ng-icon name="matFiberManualRecordSharp" class="!text-red-700/40 animate-pulse" />
+                            </ng-icon-stack>
+                            
+                        }
+                        @else if (cell.mines) {
+                            {{cell.mines}}
+                        }   
+                    }
+                    @else if (cell.flagged) { 
+                        <mat-icon class="!text-red-700">tour</mat-icon>
+                     }
+                </button>
+                }
+            </div>
+            }
+           
+        </div>
+       
+    </div>
+    
+
+    <div class="game !hidden">
+        <div class="game-header">
+            <div class="text-xl font-bold uppercase bg-zinc-800  w-13 flex border-4 border-zinc-400 border-s-zinc-600 border-t-zinc-600  items-center justify-center font-mono text-green-500">
+                {{mines.length < 10 ? '00' : mines.length < 100 ? '0' : ''}}{{mines.length}}
+            </div>
+            <button class="game-button" (click)="init()">
+                😎 
+            </button>
+            <div class="text-xl font-bold uppercase bg-zinc-800  w-13 flex border-4 border-zinc-400 border-s-zinc-600 border-t-zinc-600  items-center justify-center font-mono text-green-500">
+                000
+            </div>
+            
+        </div>
+        <div class="board">
+            @for ( row of board; track $index) {
+                <div class="row">
+                    @for ( cell of row; track $index) {
+                    <button class="cell text-black">
+                        @if (cell.isMine) { 
+                            <mat-icon class="!text-red-600 !text-base">tour</mat-icon>
+                        } @else {
+                            {{cell.mines}}    
+                        }
+                    </button>
+                    }
+                </div>
+                }
+        </div>
+    </div>
+</div>   
+
+<div class="py-4 hidden">
+    mine coords: 
+    <p>{{mines | json}}</p>
+    test celebrate:
+    <button class="bg-gray-500 p-3 z-100" (click)="celebrate($event)">:)</button>
+</div>
+
+</main>

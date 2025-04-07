@@ -1,0 +1,233 @@
+
+<main class="fade-in flex flex-col items-start justify-start min-h-screen p-7">
+
+    <h1 class="text-2xl">{{ title }}</h1>
+        
+        
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-8 w-full mt-8">
+        <!-- Left column (60%) -->
+        <div class="md:col-span-3 border border-gray-500/20 rounded-lg p-6">
+            
+            <div class="flex flex-row gap-2 text-left items-baseline w-full max-w-md mb-2">
+                <h3 class="text-sm font-light">Name of Character:</h3>
+                <div class="min-h-3 text-md  overflow-y-auto">  
+                    <p *ngIf="settingsForm.get('name')?.value" class="fade-in font-bold">{{ settingsForm.get('name')?.value }}</p>
+                    <p *ngIf="!settingsForm.get('name')?.value" class="fade-in text-gray-500">Untitled Character</p>
+                </div>
+            </div>
+
+            <div class="min-h-[300px] flex flex-col items-center justify-start">
+                <!-- Preview content will go here 
+                <p class="text-slate-500">Preview content will be displayed here</p>
+                -->
+                <div class="character-stage pb-2">
+                    <div 
+                    class="character"
+                    [ngStyle]="{'transform': 'rotate3d(0, 1, 0, '+zPos.value+'deg)'}"
+                    >
+                        <div
+                            title="head" 
+                            class="head  w-18 h-20 rounded-t-3xl rounded-b-xl" 
+                            [style.background]="settingsForm.get('skin')?.value" 
+                        >
+                            @if (+zPos.value > -85 && +zPos.value < 85) {
+                            <div class="eyes">
+                                <div 
+                                    class="rounded"
+                                    [class]="settingsForm.get('eyes')?.value?.style?.classList || 'w-1 h-2 rounded-full'" 
+                                    [style.background-color]="settingsForm.get('eyes')?.value?.color">
+                                </div>
+                                <div 
+                                    class="rounded"
+                                    [class]="settingsForm.get('eyes')?.value?.style?.classList || 'w-1 h-2 rounded-full'" 
+                                    [style.background-color]="settingsForm.get('eyes')?.value?.color">
+                                </div>
+                            </div>
+                            }
+                        </div>
+                        <div class="flex torso justify-center gap-2 h-40">
+                            
+                            <div class="arm left-arm w-10 z-1 origin-top-right" 
+                                [style.background]="settingsForm.get('skin')?.value" 
+                                [style.transform]="'rotate(' + la.value + 'deg)'"
+                            ></div>
+                            <div class="body w-40 " 
+                                [style.background]="settingsForm.get('skin')?.value"
+                                [ngStyle]="{'z-index': (+zPos.value < -85 || +zPos.value > 85)?10:0 }"
+                                [ngClass]="{
+                                    'w-30': settingsForm.get('body')?.value < 25, 
+                                    'w-40': settingsForm.get('body')?.value > 25 && settingsForm.get('body')?.value < 75, 
+                                    'w-50': settingsForm.get('body')?.value >= 75}"
+                            ></div>
+                            <div class="arm right-arm w-10  z-1 origin-top-left" 
+                                [style.background]="settingsForm.get('skin')?.value" 
+                                [style.transform]="'rotate(-' + ra.value + 'deg)'"
+                            ></div>
+                        </div>
+                        <div class="flex legs gap-10 h-40 justify-center"
+                        [ngClass]="{
+                            'gap-8': settingsForm.get('body')?.value < 25, 
+                            'gap-10': settingsForm.get('body')?.value > 25 && settingsForm.get('body')?.value < 75, 
+                            'gap-12': settingsForm.get('body')?.value >= 75}"
+                        >
+                            <div class="leg left-leg  w-14 origin-top-right" 
+                                [ngClass]="{
+                                'w-10': settingsForm.get('body')?.value < 25, 
+                                'w-14': settingsForm.get('body')?.value > 25 && settingsForm.get('body')?.value < 75, 
+                                'w-16': settingsForm.get('body')?.value >= 75}"
+                                [style.background]="settingsForm.get('skin')?.value"
+                                [style.transform]="'rotate(' + ll.value + 'deg)'"
+                            ></div>
+                            <div class="leg right-leg w-14 origin-top-left" 
+                            [ngClass]="{
+                                'w-10': settingsForm.get('body')?.value < 25, 
+                                'w-14': settingsForm.get('body')?.value > 25 && settingsForm.get('body')?.value < 75, 
+                                'w-16': settingsForm.get('body')?.value >= 75}"
+                                [style.background]="settingsForm.get('skin')?.value"
+                                [style.transform]="'rotate(-' + rl.value + 'deg)'"
+                            ></div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="flex flex-row w-full items-center justify-center gap-4">
+                    
+                    <mat-slider min="-180" max="180" step="1" class="!w-1/2" >
+                        <input matSliderThumb #zPos [value]="0" />
+                    </mat-slider>
+                    
+                    <mat-icon aria-hidden="false" aria-label="rotate 360">360</mat-icon>
+                    <span class="text-xs text-gray-500">{{zPos.value}}&deg;</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right column (40%) -->
+        <div class=" md:col-span-2">
+            <div class="border border-gray-500/20 rounded-lg p-6">
+
+                <h2 class="text-xl font-medium mb-4">
+                    Character Settings
+                </h2>
+
+                <form [formGroup]="settingsForm" class="form flex flex-col gap-4">
+                    <mat-form-field appearance="outline" class="w-full">
+                        <mat-label>Name</mat-label>
+                        <input matInput 
+                            formControlName="name" 
+                            placeholder="Character name" 
+                            maxlength="32"
+                            
+                        >
+                    </mat-form-field>
+
+                    <mat-divider />
+
+                    <div class="flex flex-row md:flex-col lg:flex-row flex-wrap gap-4 ">
+                        <mat-card class="p-5 grow">
+                            <mat-label class="mb-2">Skin</mat-label>
+                            <div class="grid grid-cols-6 lg:grid-cols-4 gap-2">
+                                <button 
+                                    *ngFor="let color of skinColors" 
+                                    class="w-6 h-6 rounded-full border border-gray-500/20 hover:scale-110 transition-transform"
+                                    [style.background]="color"
+                                    (click)="settingsForm.get('skin')?.setValue(color)"
+                                    [class.ring-2]="settingsForm.get('skin')?.value === color"
+                                    [class.ring-offset-2]="settingsForm.get('skin')?.value === color"
+                                    [class.ring-primary]="settingsForm.get('skin')?.value === color">
+                                </button>
+                            </div>
+                        </mat-card>
+                        <mat-card class="p-5 grow">
+                            <mat-label class="mb-2">Eyes</mat-label>
+                            <div class="grid grid-cols-6 lg:grid-cols-4  gap-2 mb-2">
+                                <button 
+                                    *ngFor="let color of eyeColors" 
+                                    class="w-4 h-4 border border-gray-500/20 hover:scale-110 transition-transform rounded-sm"
+                                    [style.background-color]="color"
+                                    (click)="setEyeColor(color)"
+                                    [class.ring-2]="settingsForm.get('eyes')?.value?.color === color"
+                                    [class.ring-offset-2]="settingsForm.get('eyes')?.value?.color === color"
+                                    [class.ring-primary]="settingsForm.get('eyes')?.value?.color === color">
+                                </button>
+                            </div>
+                            <hr class="text-gray-500/20 mt-1 mb-4" />
+                            <div class="grid grid-cols-4 lg:grid-cols-2 gap-3">
+                                <button 
+                                    *ngFor="let style of eyeStyles" 
+                                    class="rounded w-10 h-5 flex items-center justify-center border  border-gray-500/20 hover:scale-110 transition-transform"
+                                    
+                                    (click)="setEyeStyle(style)"
+                                    [class.ring-2]="settingsForm.get('eyes')?.value?.style === style"
+                                    [class.ring-offset-2]="settingsForm.get('eyes')?.value?.style === style"
+                                    [class.ring-primary]="settingsForm.get('eyes')?.value?.style === style">
+                                    <div [class]="'w-1 h-1 rounded ' + style.classList" [ngClass]="{'bg-white': isDarkTheme(), 'bg-black': !isDarkTheme()}"></div>
+                                </button>
+                            </div>
+                        </mat-card>
+                    </div>
+
+                    <div class="flex flex-row">
+                        <mat-card class="p-5 py-2 grow !flex !flex-row items-center gap-4">
+                            <mat-label class="mb-2 ">Body Size</mat-label>
+                            <mat-slider min="0" max="100" step="1" class="grow">
+                                <input formControlName="body" matSliderThumb>
+                            </mat-slider>
+                        </mat-card>
+                    </div>
+
+                    <div class="flex flex-row md:flex-col lg:flex-row gap-4 ">
+                        <mat-card class="p-5 grow">
+                            <div class="flex justify-between items-baseline">
+                                <label id="la-slider-label" class="text-sm">Left Arm</label>
+                                <label class="la-slider-value-label mr-2 text-xs text-gray-500">{{la.value}}&deg;</label>
+                            </div>
+                            <mat-slider min="0" max="360" step="1">
+                                <input formControlName="armLeft" matSliderThumb #la>
+                            </mat-slider>
+
+                            <div class="flex justify-between items-baseline">
+                                <label id="ll-slider-label" class="text-sm">Left Leg</label>
+                                <label class="ll-slider-value-label mr-2 text-xs text-gray-500">{{ll.value}}&deg;</label>
+                            </div>
+                            <mat-slider min="0" max="120" step="1">
+                                <input formControlName="legLeft" matSliderThumb #ll>
+                            </mat-slider>
+
+                            
+                        </mat-card>
+
+                        <mat-card class="p-5 grow">
+                            <div class="flex justify-between items-baseline">
+                                <label id="ra-slider-label" class="text-sm">Right Arm</label>
+                                <label class="ra-slider-value-label mr-2 text-xs text-gray-500">
+                                    {{+ra.value > 0 ? '-' : ''}}
+                                    {{ra.value}}&deg;</label>
+                            </div>
+                            <mat-slider min="0" max="360" step="1">
+                                <input formControlName="armRight" matSliderThumb  #ra>
+                            </mat-slider>
+                            <div class="flex justify-between items-baseline">
+                                <label id="rl-slider-label" class="text-sm">Right Leg</label>
+                                <label class="ra-slider-value-label mr-2 text-xs text-gray-500">
+                                    {{+rl.value > 0 ? '-' : ''}}
+                                    {{rl.value}}&deg;</label>
+                            </div>
+                            <mat-slider min="0" max="120" step="1">
+                                <input formControlName="legRight" matSliderThumb  #rl>
+                            </mat-slider>
+                        </mat-card>
+
+                    </div>
+                    
+                    <button mat-raised-button color="primary" type="submit" [disabled]="!settingsForm.valid">
+                        Apply Changes
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</main>

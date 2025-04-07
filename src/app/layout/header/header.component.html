@@ -1,0 +1,24 @@
+<mat-toolbar class="gap-2">
+    <button mat-icon-button class="toggle-icon mr-4" aria-label="Toggle menu" (click)="sidenavToggle.emit()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="font-black">Ng101</span>
+    <span class="toolbar-spacer"></span>
+    <!-- star project on github -->
+    <button mat-icon-button class="toggle-icon" aria-label="Star project" 
+        #tooltip="matTooltip"
+        matTooltip="Star this project on github"
+        matTooltipPosition="below"
+    >
+      <mat-icon>star_border</mat-icon>
+    </button>
+    
+    <!-- theme toggle -->
+    <button mat-icon-button class="toggle-icon" aria-label="Toggle theme" 
+        #tooltip="matTooltip"
+        matTooltip="Toggle theme"
+        (click)="toggleTheme()">
+    <mat-icon>{{ isDarkTheme ? 'dark_mode' : 'light_mode' }}</mat-icon>
+    </button>
+    
+</mat-toolbar>

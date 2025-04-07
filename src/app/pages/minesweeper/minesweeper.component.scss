@@ -1,0 +1,70 @@
+@use "tailwindcss";
+
+.game {
+    @apply flex flex-col items-center;
+    @apply bg-zinc-500;
+    @apply text-white;
+    @apply p-4;
+    @apply shadow-lg;
+    @apply border-7 border-zinc-600/50 border-s-zinc-600  border-b-zinc-800 border-r-zinc-700;
+}
+
+.game-header {
+    @apply flex justify-between w-full;
+    @apply mb-4;
+}
+
+.game-button {
+    @apply bg-zinc-400/80;
+    @apply border-3 border-zinc-400/95;
+    @apply hover:bg-zinc-400;
+    @apply cursor-pointer font-black text-3xl w-10 h-10;
+    font-family: 'Roboto', sans-serif;
+    border-style: outset;
+}
+
+.board {
+    @apply bg-zinc-700;
+    @apply border-6;
+    @apply border-zinc-400 border-s-zinc-400 border-t-zinc-500;
+    @apply text-black text-xs;
+    border-style: inset;
+    
+}
+
+.row {
+    @apply flex;
+}
+
+.cell {
+    @apply flex grow items-center justify-center w-8 h-8;
+    @apply bg-zinc-400/80;
+    @apply border-3 border-zinc-400/95;
+    @apply hover:bg-zinc-400;
+    @apply cursor-pointer font-black text-2xl;
+    font-family: 'Roboto', sans-serif;
+    border-style: outset;
+    @apply transition-all duration-200;
+    @apply ease-in-out;
+    
+}
+.revealed {
+    @apply bg-zinc-500/10 hover:bg-zinc-500/10 cursor-default border-1 border-zinc-700;
+    border-style: solid;
+}
+.nearby-1 { @apply text-blue-600; }
+.nearby-2 { @apply text-green-600; }
+.nearby-3 { @apply text-red-600; }
+.nearby-4 { @apply text-purple-500; }
+.nearby-5 { @apply text-yellow-600; }
+.nearby-6 { @apply text-cyan-600; }
+.nearby-7 { @apply text-pink-600; }
+.nearby-8 { @apply text-gray-600; }
+
+.flag {
+    @apply text-red-500;
+}
+
+#confetti {
+    @apply pointer-events-none;
+}

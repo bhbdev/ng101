@@ -1,1 +1,39 @@
+
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+:root {
+    --skin-color: #ffdbac;
+} 
+
+
+body {
+    padding: 0;
+    margin: 0;
+    height: 100%;    
+}
+
+mat-label {
+    @apply text-sm;
+}
+.mdc-notched-outline__notch
+{
+  border-right: none;
+}
+
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
